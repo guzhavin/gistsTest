@@ -46,12 +46,14 @@ extension GistViewController: UITableViewDelegate, UITableViewDataSource {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "OwnerInfoCell", for: indexPath) as? GistsListTableViewCell {
                 cell.configure(userName: presenter.headerInfo.ownerName, gistName: presenter.headerInfo.gistName)
                 cell.setAvatar(image: presenter.headerInfo.avatar)
+
                 return cell
             } else { return UITableViewCell() }
         case 1:
             if let cell = tableView.dequeueReusableCell(withIdentifier: "FileCell", for: indexPath) as? GistFileTableViewCell {
                 cell.configure(fileName: presenter.filesInfo[indexPath.item].fileName,
                                content: presenter.filesInfo[indexPath.item].body)
+
                 return cell
             } else { return UITableViewCell() }
         case 2:
@@ -60,11 +62,13 @@ extension GistViewController: UITableViewDelegate, UITableViewDataSource {
                                gistDate:  presenter.commitsInfo[indexPath.item].date,
                                addCount:  presenter.commitsInfo[indexPath.item].addCount,
                                delCount:  presenter.commitsInfo[indexPath.item].delCount)
+
                 if let urlString = presenter.commitsInfo[indexPath.item].avatar {
                     AvatarManager.shared.getImage(urlString: urlString) { image in
                         cell.setAvatar(image: image)
                     }
                 }
+
                 return cell
             } else { return UITableViewCell() }
         default:

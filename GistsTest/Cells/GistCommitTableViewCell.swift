@@ -40,8 +40,8 @@ class GistCommitTableViewCell: UITableViewCell {
         $0.numberOfLines = 1
         $0.textColor = .green
         $0.font = UIFont.boldSystemFont(ofSize: 16)
-
         $0.translatesAutoresizingMaskIntoConstraints = false
+
         return $0
     }(UILabel())
 
@@ -113,6 +113,7 @@ class GistCommitTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+
         userAvatarImageView.image = nil
         userNameLabel.text = nil
         gistDataLabel.text = nil

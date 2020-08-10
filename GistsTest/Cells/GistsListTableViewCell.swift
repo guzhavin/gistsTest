@@ -82,6 +82,7 @@ class GistsListTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+
         userAvatarImageView.image = nil
         userNameLabel.text = nil
         gistNameLabel.text = nil

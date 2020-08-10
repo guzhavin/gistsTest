@@ -26,10 +26,13 @@ class GistViewController: UIViewController, GistViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDelegate = self
+
         gistTableView.delegate = self
         gistTableView.dataSource = self
+
         setupViews()
         setupConstraints()
+
         presenter.loadGist()
         presenter.loadCommits()
     }

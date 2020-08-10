@@ -69,6 +69,7 @@ class UserInTopCollectionViewCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+
         userAvatarImageView.image = nil
         userNameLabel.text = nil
     }

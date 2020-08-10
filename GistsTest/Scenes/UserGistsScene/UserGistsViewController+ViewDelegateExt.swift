@@ -14,7 +14,6 @@ extension UserGistsViewController: UserGistsViewDelegate {
         locationLabel.text = location
         emailLabel.text = email
         bioLabel.text = bio
-        view.layoutIfNeeded()
     }
 
     func setUserAvatar(image: UIImage?) {
@@ -29,5 +28,4 @@ extension UserGistsViewController: UserGistsViewDelegate {
             cell.setAvatar(image: image)
         }
     }
-
 }

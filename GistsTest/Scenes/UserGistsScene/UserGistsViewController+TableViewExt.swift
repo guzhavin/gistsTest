@@ -21,9 +21,11 @@ extension UserGistsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = (tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as? GistsListTableViewCell) else { return UITableViewCell() }
+        guard let cell = (tableView.dequeueReusableCell(withIdentifier: "GistListTableCell", for: indexPath) as? GistsListTableViewCell) else { return UITableViewCell() }
+
         cell.configure(userName: presenter.prepareDataString(presenter.gists[indexPath.item].owner?.login),
                        gistName: presenter.prepareDataString(presenter.gists[indexPath.item].searchDescription))
+
         if let avatarUrl = presenter.gists[indexPath.item].owner?.avatarURL {
             presenter.loadOwnerImage(string: avatarUrl, for: indexPath)
         }
@@ -35,6 +37,7 @@ extension UserGistsViewController: UITableViewDelegate, UITableViewDataSource {
         let vc = GistViewController()
         vc.presenter.gistId = presenter.gists[indexPath.item].id
         vc.presenter.loadGist()
+
         navigationController?.show(vc, sender: nil)
     }
 }

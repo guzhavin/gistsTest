@@ -71,6 +71,7 @@ class GistFileTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+
         fileNameLabel.text = nil
         fileTextView.text = nil
         updateFilteTextViewHeight()

@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - GistFull
 struct GistFull: Codable {
     var url: String?
     var forksURL: String?

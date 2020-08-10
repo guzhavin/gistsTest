@@ -23,7 +23,7 @@ class UserGistsViewController: UIViewController {
     }(UIStackView())
 
     var contentTableView: UITableView = {
-        $0.register(GistsListTableViewCell.self, forCellReuseIdentifier: "TableCell")
+        $0.register(GistsListTableViewCell.self, forCellReuseIdentifier: "GistListTableCell")
         $0.tableFooterView = UIView()
         $0.rowHeight = UITableView.automaticDimension
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -47,6 +47,7 @@ class UserGistsViewController: UIViewController {
         $0.textAlignment = .center
         $0.lineBreakMode = .byTruncatingTail
         $0.translatesAutoresizingMaskIntoConstraints = false
+
         return $0
 
     }(UILabel())
@@ -57,6 +58,7 @@ class UserGistsViewController: UIViewController {
         $0.textAlignment = .center
         $0.lineBreakMode = .byTruncatingTail
         $0.translatesAutoresizingMaskIntoConstraints = false
+
         return $0
 
     }(UILabel())
@@ -67,6 +69,7 @@ class UserGistsViewController: UIViewController {
         $0.textAlignment = .center
         $0.lineBreakMode = .byTruncatingTail
         $0.translatesAutoresizingMaskIntoConstraints = false
+
         return $0
 
     }(UILabel())
@@ -85,7 +88,7 @@ class UserGistsViewController: UIViewController {
 
         userInfoStackView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(4)
-            $0.left.right.equalToSuperview()
+            $0.left.right.equalToSuperview().inset(16)
         }
 
         contentTableView.snp.makeConstraints {
@@ -99,7 +102,9 @@ class UserGistsViewController: UIViewController {
 
         contentTableView.delegate = self
         contentTableView.dataSource = self
+
         presenter.viewDelegate = self
+
         presenter.loadGists()
         presenter.loadUserInfo()
     }

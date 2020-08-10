@@ -17,7 +17,7 @@ class GistsListViewController: UIViewController {
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         flowLayout.itemSize = .init(width: 80, height: 70)
         flowLayout.scrollDirection = .horizontal
-        flowLayout.minimumInteritemSpacing = 0.0
+        flowLayout.minimumLineSpacing = 8
 
         let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.register(UserInTopCollectionViewCell.self, forCellWithReuseIdentifier: "UserCell")
@@ -29,7 +29,7 @@ class GistsListViewController: UIViewController {
     }()
 
     var contentTableView: UITableView = {
-        $0.register(GistsListTableViewCell.self, forCellReuseIdentifier: "TableCell")
+        $0.register(GistsListTableViewCell.self, forCellReuseIdentifier: "GistListTableCell")
         $0.tableFooterView = UIView()
         $0.rowHeight = UITableView.automaticDimension
         $0.translatesAutoresizingMaskIntoConstraints = false

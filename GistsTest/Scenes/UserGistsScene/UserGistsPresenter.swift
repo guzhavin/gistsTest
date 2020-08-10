@@ -19,6 +19,7 @@ protocol UserGistsViewDelegate: class {
 
 class UserGistsPresenter {
     private var currentLoadedPage: Int = 0
+
     var gists: Gists = [] {
         didSet {
             DispatchQueue.main.async {
@@ -26,11 +27,13 @@ class UserGistsPresenter {
             }
         }
     }
+
     var user: User? {
         didSet {
             viewDelegate?.setUserContent(location: prepareDataString(user?.location),
                                          email: prepareDataString(user?.email),
                                          bio: prepareDataString(user?.bio))
+
             if let avatarUrl = user?.avatarURL {
                 loadUserAvatar(string: avatarUrl)
             }
@@ -62,11 +65,7 @@ class UserGistsPresenter {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
 
-        if let jsonGists = try? decoder.decode(Gists.self, from: json) {
-            return jsonGists
-        } else {
-            return []
-        }
+        return (try? decoder.decode(Gists.self, from: json)) ?? []
     }
 
     func loadUserInfo() {
@@ -89,12 +88,7 @@ class UserGistsPresenter {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
 
-        if let jsonGists = try? decoder.decode(User.self, from: json) {
-            return jsonGists
-        } else {
-            return nil
-        }
-
+        return try? decoder.decode(User.self, from: json)
     }
 
     func loadUserAvatar(string: String) {

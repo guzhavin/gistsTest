@@ -17,6 +17,7 @@ protocol GistsListViewDelegate: class {
 
 class GistsListPresenter {
     private var currentLoadedPage: Int = 0
+
     var gists: Gists = [] {
         didSet {
             DispatchQueue.main.async {
@@ -48,18 +49,18 @@ class GistsListPresenter {
         }
     }
 
-    func prepareDataString(_ string: String?) -> String {
-        if let string = string {
-            return string.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 ? string : "Unknown"
-        }
-        return "Unknown"
-    }
-
     func parseGists(json: Data) -> Gists {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
 
         return (try? decoder.decode(Gists.self, from: json)) ?? []
+    }
+
+    func prepareDataString(_ string: String?) -> String {
+        if let string = string {
+            return string.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 ? string : "Unknown"
+        }
+        return "Unknown"
     }
 
     func loadAvatar(urlString: String, for indexPath: IndexPath) {
@@ -85,23 +86,24 @@ class GistsListPresenter {
     func updateAmazingTenList(id: Int) {
         guard let user = allUsersTopList[id] else { return }
         if amazingTen.isEmpty {
-            amazingTen.append((id: id, name: user.name, count: 1, avatarUrl: user.avatarUrl))
-        } else {
-            if let index = amazingTen.firstIndex(where: { $0.id == id }) {
-                amazingTen.remove(at: index)
-            }
-            for index in (0..<amazingTen.count) {
-                if amazingTen[index].count <= user.count {
-                    amazingTen.insert((id: id, name: user.name, count: user.count, avatarUrl: user.avatarUrl), at: index)
-                    if amazingTen.count > 10 {
-                        amazingTen.removeLast()
-                    }
-                    break
-                }
-            }
+            amazingTen.append((id: id, name: user.name, count: user.count, avatarUrl: user.avatarUrl))
+
+            return
         }
 
+        if let index = amazingTen.firstIndex(where: { $0.id == id }) {
+            amazingTen.remove(at: index)
+        }
+
+        for index in (0..<amazingTen.count) {
+            if amazingTen[index].count <= user.count {
+                amazingTen.insert((id: id, name: user.name, count: user.count, avatarUrl: user.avatarUrl), at: index)
+                if amazingTen.count > 10 {
+                    amazingTen.removeLast()
+                }
+
+                return
+            }
+        }
     }
-
-
 }
