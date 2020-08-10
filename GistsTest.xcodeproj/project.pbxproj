@@ -166,7 +166,6 @@
 		6344776024DC2E1A005E65D4 = {
 			isa = PBXGroup;
 			children = (
-				638DA54124E152C900ED124A /* Models */,
 				6344776B24DC2E1A005E65D4 /* GistsTest */,
 				6344776A24DC2E1A005E65D4 /* Products */,
 			);
@@ -183,6 +182,7 @@
 		6344776B24DC2E1A005E65D4 /* GistsTest */ = {
 			isa = PBXGroup;
 			children = (
+				638DA54124E152C900ED124A /* Models */,
 				638DA53824E1484100ED124A /* Cells */,
 				6344778824DC3BA7005E65D4 /* SnapKit */,
 				6344778224DC2EBE005E65D4 /* Scenes */,
