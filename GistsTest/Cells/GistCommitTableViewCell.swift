@@ -128,4 +128,3 @@ class GistCommitTableViewCell: UITableViewCell {
         delCountLabel.text = nil
     }
 }
-

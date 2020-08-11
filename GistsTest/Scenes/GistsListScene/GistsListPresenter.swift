@@ -20,6 +20,8 @@ class GistsListPresenter {
 
     var gists: Gists = [] {
         didSet {
+            gistsContent = gists.map { GistsListTableViewCellModel(userName: prepareDataString($0.owner?.login),
+                                                    gistName: prepareDataString($0.searchDescription)) }
             DispatchQueue.main.async {
                 self.viewDelegate?.contentTableView.reloadData()
             }
@@ -29,6 +31,7 @@ class GistsListPresenter {
     private var allUsersTopList: [Int: (name: String, count: Int, avatarUrl: String?)] = [:]
     private var amazingTen: [(id: Int, name: String, count: Int, avatarUrl: String?)] = []
     var usersCollectionContent: [(model: UserInTopCollectionViewCellModel, avatarUrl: String?)] = []
+    var gistsContent: [GistsListTableViewCellModel] = []
 
     weak var viewDelegate: GistsListViewDelegate?
 
@@ -65,7 +68,9 @@ class GistsListPresenter {
 
     func loadAvatar(urlString: String, for indexPath: IndexPath) {
         AvatarManager.shared.getImage(urlString: urlString) { [weak self] image in
-            self?.viewDelegate?.setImageForCell(at: indexPath, image: image)
+            DispatchQueue.main.async {
+                self?.viewDelegate?.setImageForCell(at: indexPath, image: image)
+            }
         }
     }
 
@@ -105,6 +110,12 @@ class GistsListPresenter {
 
                 return
             }
+        }
+    }
+
+    func fetchIfNeeded(item: Int) {
+        if item == gists.count - 20 {
+            loadGists()
         }
     }
 

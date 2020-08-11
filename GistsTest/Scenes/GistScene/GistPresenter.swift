@@ -24,8 +24,8 @@ class GistPresenter {
 
     private var gist: GistFull? {
         didSet {
-            headerInfo.ownerName = prepareDataString(gist?.owner?.login)
-            headerInfo.gistName = prepareDataString(gist?.searchDescription)
+            headerInfo.header = GistsListTableViewCellModel(userName: prepareDataString(gist?.owner?.login),
+                                                            gistName: prepareDataString(gist?.searchDescription))
 
             if let url = gist?.owner?.avatarURL {
                 AvatarManager.shared.getImage(urlString: url, completion: { [weak self] image in
@@ -70,7 +70,7 @@ class GistPresenter {
         }
     }
 
-    var headerInfo: (ownerName: String, avatar: UIImage?, gistName: String) = ("", nil, "")
+    var headerInfo: (header: GistsListTableViewCellModel, avatar: UIImage?) = (.init(userName: "", gistName: ""), nil)
     var filesInfo: [GistFileTableViewCellModel] = []
     var commitsInfo: [(model: GistCommitTableViewCellModel, avatarUrl: String?)] = []
 
@@ -129,5 +129,4 @@ class GistPresenter {
         
         return try? decoder.decode([Commit].self, from: json) 
     }
-    
 }

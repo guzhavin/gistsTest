@@ -44,7 +44,7 @@ extension GistViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.section {
         case 0:
             if let cell = tableView.dequeueReusableCell(withIdentifier: "OwnerInfoCell", for: indexPath) as? GistsListTableViewCell {
-                cell.configure(userName: presenter.headerInfo.ownerName, gistName: presenter.headerInfo.gistName)
+                cell.configure(model: presenter.headerInfo.header)
                 cell.setAvatar(image: presenter.headerInfo.avatar)
 
                 return cell
@@ -61,7 +61,9 @@ extension GistViewController: UITableViewDelegate, UITableViewDataSource {
 
                 if let urlString = presenter.commitsInfo[indexPath.item].avatarUrl {
                     AvatarManager.shared.getImage(urlString: urlString) { image in
-                        cell.setAvatar(image: image)
+                        DispatchQueue.main.async {
+                            cell.setAvatar(image: image)
+                        }
                     }
                 }
 

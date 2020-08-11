@@ -27,16 +27,12 @@ class AvatarManager {
         if let url = URL(string: urlString) {
             URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
                 if error != nil {
-                    DispatchQueue.main.async {
-                        completion(nil)
-                    }
+                    completion(nil)
                 }
-                DispatchQueue.main.async { [weak self] in
-                    if let data = data {
-                        if let downloadedImage = UIImage(data: data) {
-                            self?.imageCache.setObject(downloadedImage, forKey: NSString(string: urlString))
-                            completion(downloadedImage)
-                        }
+                if let data = data {
+                    if let downloadedImage = UIImage(data: data) {
+                        self.imageCache.setObject(downloadedImage, forKey: NSString(string: urlString))
+                        completion(downloadedImage)
                     }
                 }
             }).resume()
