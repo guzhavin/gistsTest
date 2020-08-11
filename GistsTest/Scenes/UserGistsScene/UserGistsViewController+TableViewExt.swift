@@ -34,10 +34,6 @@ extension UserGistsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = GistViewController()
-        vc.presenter.gistId = presenter.gists[indexPath.item].id
-        vc.presenter.loadGist()
-
-        navigationController?.show(vc, sender: nil)
+        presenter.routeToGistScene(item: indexPath.item)
     }
 }

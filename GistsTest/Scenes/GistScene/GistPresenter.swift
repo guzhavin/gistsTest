@@ -34,7 +34,8 @@ class GistPresenter {
             }
 
             gist?.files.forEach { file in
-                filesInfo.append((file.value.filename, file.value.content))
+                filesInfo.append(GistFileTableViewCellModel(fileName: file.value.filename,
+                                                            content: file.value.content))
             }
 
             viewDelegate?.gistTableView.reloadData()
@@ -58,19 +59,20 @@ class GistPresenter {
                 let addCount = prepareDataString(commit.changeStatus?.additions.flatMap(String.init))
                 let delCount = prepareDataString(commit.changeStatus?.deletions.flatMap(String.init))
 
-                commitsInfo.append((userName: userName,
-                                    avatar: commit.user?.avatarURL,
-                                    date: dateString,
-                                    addCount: addCount,
-                                    delCount: delCount))
+                commitsInfo.append((model: GistCommitTableViewCellModel(userName: userName,
+                                                                        gistDate: dateString,
+                                                                        addCount: addCount,
+                                                                        delCount: delCount),
+                                    avatarUrl: commit.user?.avatarURL
+                ))
             }
             viewDelegate?.gistTableView.reloadSections([2], with: .automatic)
         }
     }
 
     var headerInfo: (ownerName: String, avatar: UIImage?, gistName: String) = ("", nil, "")
-    var filesInfo: [(fileName: String?, body: String?)] = []
-    var commitsInfo: [(userName: String, avatar: String?, date: String, addCount: String, delCount: String)] = []
+    var filesInfo: [GistFileTableViewCellModel] = []
+    var commitsInfo: [(model: GistCommitTableViewCellModel, avatarUrl: String?)] = []
 
     func prepareDataString(_ string: String?) -> String {
         if let string = string {

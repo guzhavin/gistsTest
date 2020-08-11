@@ -109,4 +109,13 @@ class UserGistsPresenter {
         }
         return "Unknown"
     }
+
+    func routeToGistScene(item: Int) {
+        let vc = GistViewController()
+        vc.presenter.gistId = gists[item].id
+        vc.presenter.loadGist()
+
+        (viewDelegate as? UIViewController)?.navigationController?.show(vc, sender: nil)
+
+    }
 }

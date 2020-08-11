@@ -50,3 +50,4 @@ extension AvatarManager: NSCopying {
         return self
     }
 }
+

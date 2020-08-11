@@ -27,8 +27,8 @@ class GistsListPresenter {
     }
 
     private var allUsersTopList: [Int: (name: String, count: Int, avatarUrl: String?)] = [:]
-
-    var amazingTen: [(id: Int, name: String, count: Int, avatarUrl: String?)] = []
+    private var amazingTen: [(id: Int, name: String, count: Int, avatarUrl: String?)] = []
+    var usersCollectionContent: [(model: UserInTopCollectionViewCellModel, avatarUrl: String?)] = []
 
     weak var viewDelegate: GistsListViewDelegate?
 
@@ -80,6 +80,7 @@ class GistsListPresenter {
                 updateAmazingTenList(id: id)
             }
         }
+        usersCollectionContent = amazingTen.map { (model: UserInTopCollectionViewCellModel(name: $0.name), avatarUrl: $0.avatarUrl) }
         viewDelegate?.usersTopCollectionView.reloadData()
     }
 
@@ -105,5 +106,21 @@ class GistsListPresenter {
                 return
             }
         }
+    }
+
+    func routeToGistScene(item: Int) {
+        // id for commits test: "03163e7295fad76b6e7781235647d158"
+        let vc = GistViewController()
+        vc.presenter.gistId = gists[item].id
+        vc.presenter.loadGist()
+
+        (viewDelegate as? UIViewController)?.navigationController?.show(vc, sender: nil)
+    }
+
+    func routeToUserGistsScene(item: Int) {
+        let vc = UserGistsViewController()
+        vc.presenter.userName = amazingTen[item].name
+
+        (viewDelegate as? UIViewController)?.navigationController?.show(vc, sender: nil)
     }
 }

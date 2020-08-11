@@ -51,19 +51,15 @@ extension GistViewController: UITableViewDelegate, UITableViewDataSource {
             } else { return UITableViewCell() }
         case 1:
             if let cell = tableView.dequeueReusableCell(withIdentifier: "FileCell", for: indexPath) as? GistFileTableViewCell {
-                cell.configure(fileName: presenter.filesInfo[indexPath.item].fileName,
-                               content: presenter.filesInfo[indexPath.item].body)
+                cell.configure(model: presenter.filesInfo[indexPath.item])
 
                 return cell
             } else { return UITableViewCell() }
         case 2:
             if let cell = tableView.dequeueReusableCell(withIdentifier: "CommitCell", for: indexPath) as? GistCommitTableViewCell {
-                cell.configure(userName: presenter.commitsInfo[indexPath.item].userName,
-                               gistDate:  presenter.commitsInfo[indexPath.item].date,
-                               addCount:  presenter.commitsInfo[indexPath.item].addCount,
-                               delCount:  presenter.commitsInfo[indexPath.item].delCount)
+                cell.configure(model: presenter.commitsInfo[indexPath.item].model)
 
-                if let urlString = presenter.commitsInfo[indexPath.item].avatar {
+                if let urlString = presenter.commitsInfo[indexPath.item].avatarUrl {
                     AvatarManager.shared.getImage(urlString: urlString) { image in
                         cell.setAvatar(image: image)
                     }

@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+struct UserInTopCollectionViewCellModel {
+    var name: String
+}
+
 class UserInTopCollectionViewCell: UICollectionViewCell {
     private var userAvatarImageView: UIImageView = {
         $0.contentMode = .scaleAspectFit
@@ -59,8 +63,8 @@ class UserInTopCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func configure(name: String) {
-        userNameLabel.text = name
+    func configure(model: UserInTopCollectionViewCellModel) {
+        userNameLabel.text = model.name
     }
 
     func setAvatar(image: UIImage?) {
@@ -70,7 +74,7 @@ class UserInTopCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        userAvatarImageView.image = nil
         userNameLabel.text = nil
+        userAvatarImageView.image = nil
     }
 }

@@ -13,11 +13,13 @@ extension GistsListViewController: UICollectionViewDataSource, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let userCell = (collectionView.dequeueReusableCell(withReuseIdentifier: "UserCell", for: indexPath as IndexPath) as? UserInTopCollectionViewCell) else { return UICollectionViewCell() }
 
-        userCell.configure(name: presenter.amazingTen[indexPath.item].name)
+        userCell.configure(model: presenter.usersCollectionContent[indexPath.item].model)
 
-        if let avatarUrl = presenter.amazingTen[indexPath.item].avatarUrl {
+        if let avatarUrl =  presenter.usersCollectionContent[indexPath.item].avatarUrl {
             AvatarManager.shared.getImage(urlString: avatarUrl, completion: { image in
-                userCell.setAvatar(image: image)
+                DispatchQueue.main.async {
+                    userCell.setAvatar(image: image)
+                }
             })
         }
 
@@ -29,13 +31,10 @@ extension GistsListViewController: UICollectionViewDataSource, UICollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.amazingTen.count
+        return presenter.usersCollectionContent.count
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = UserGistsViewController()
-        vc.presenter.userName = presenter.amazingTen[indexPath.item].name
-
-        navigationController?.show(vc, sender: nil)
+        presenter.routeToUserGistsScene(item: indexPath.item)
     }
 }

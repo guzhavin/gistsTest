@@ -9,6 +9,13 @@
 import Foundation
 import UIKit
 
+struct GistCommitTableViewCellModel {
+    var userName: String
+    var gistDate: String
+    var addCount: String
+    var delCount: String
+}
+
 class GistCommitTableViewCell: UITableViewCell {
     private var userAvatarImageView: UIImageView = {
         $0.contentMode = .scaleAspectFit
@@ -100,11 +107,11 @@ class GistCommitTableViewCell: UITableViewCell {
         }
     }
 
-    func configure(userName: String?, gistDate: String?, addCount: String, delCount: String) {
-        userNameLabel.text = userName
-        gistDataLabel.text = gistDate
-        addCountLabel.text = addCount
-        delCountLabel.text = delCount
+    func configure(model: GistCommitTableViewCellModel) {
+        userNameLabel.text = model.userName
+        gistDataLabel.text = model.gistDate
+        addCountLabel.text = model.addCount
+        delCountLabel.text = model.delCount
     }
 
     func setAvatar(image: UIImage?) {
