@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+struct GistsListTableViewCellModel {
+    var userName: String
+    var gistName: String
+}
+
 class GistsListTableViewCell: UITableViewCell {
     private var userAvatarImageView: UIImageView = {
         $0.contentMode = .scaleAspectFit
@@ -71,9 +76,9 @@ class GistsListTableViewCell: UITableViewCell {
         }
     }
 
-    func configure(userName: String?, gistName: String?) {
-        userNameLabel.text = userName
-        gistNameLabel.text = gistName
+    func configure(model: GistsListTableViewCellModel) {
+        userNameLabel.text = model.userName
+        gistNameLabel.text = model.gistName
     }
 
     func setAvatar(image: UIImage?) {

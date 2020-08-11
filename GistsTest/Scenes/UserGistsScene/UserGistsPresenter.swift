@@ -22,6 +22,8 @@ class UserGistsPresenter {
 
     var gists: Gists = [] {
         didSet {
+            gistsContent = gists.map { GistsListTableViewCellModel(userName: prepareDataString($0.owner?.login),
+                                                                   gistName: prepareDataString($0.searchDescription)) }
             DispatchQueue.main.async {
                 self.viewDelegate?.contentTableView.reloadData()
             }
@@ -39,6 +41,8 @@ class UserGistsPresenter {
             }
         }
     }
+
+    var gistsContent: [GistsListTableViewCellModel] = []
 
     var userName: String?
 
@@ -93,13 +97,17 @@ class UserGistsPresenter {
 
     func loadUserAvatar(string: String) {
         AvatarManager.shared.getImage(urlString: string) { [weak self] image in
-            self?.viewDelegate?.setUserAvatar(image: image)
+            DispatchQueue.main.async {
+                self?.viewDelegate?.setUserAvatar(image: image)
+            }
         }
     }
 
     func loadOwnerImage(string: String, for indexPath: IndexPath) {
         AvatarManager.shared.getImage(urlString: string) { [weak self] image in
-            self?.viewDelegate?.setImageForCell(at: indexPath, image: image)
+            DispatchQueue.main.async {
+                self?.viewDelegate?.setImageForCell(at: indexPath, image: image)
+            }
         }
     }
 
@@ -108,5 +116,19 @@ class UserGistsPresenter {
             return string.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 ? string : "Unknown"
         }
         return "Unknown"
+    }
+
+    func fetchIfNeeded(item: Int) {
+        if item == gists.count - 20 {
+            loadGists()
+        }
+    }
+
+    func routeToGistScene(item: Int) {
+        let vc = GistViewController()
+        vc.presenter.gistId = gists[item].id
+        vc.presenter.loadGist()
+
+        (viewDelegate as? UIViewController)?.navigationController?.show(vc, sender: nil)
     }
 }

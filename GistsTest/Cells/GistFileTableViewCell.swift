@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+struct GistFileTableViewCellModel {
+    var fileName: String?
+    var content: String?
+}
+
 class GistFileTableViewCell: UITableViewCell {
     private var fileNameLabel: UILabel = {
         $0.numberOfLines = 1
@@ -63,9 +68,9 @@ class GistFileTableViewCell: UITableViewCell {
         }
     }
 
-    func configure(fileName: String?, content: String?) {
-        fileNameLabel.text = fileName
-        fileTextView.text = content
+    func configure(model: GistFileTableViewCellModel) {
+        fileNameLabel.text = model.fileName
+        fileTextView.text = model.content
         updateFilteTextViewHeight()
     }
 
